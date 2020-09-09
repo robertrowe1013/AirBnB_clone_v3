@@ -26,6 +26,7 @@ def all_cities(state_id):
             abort(400, description="Not a JSON")
         if 'name' not in request.json:
             abort(400, description="Missing name")
+        data['state_id'] = state_id
         city = City(**data)
         city.save()
         return (jsonify(city.to_dict()), 201)
