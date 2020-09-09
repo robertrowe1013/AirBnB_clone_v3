@@ -25,7 +25,7 @@ def all_reviews(place_id):
         data = request.get_json()
         if not request.is_json:
             abort(400, description="Not a JSON")
-        if 'user' not in request.json:
+        if 'user_id' not in request.json:
             abort(400, description="Missing user_id")
         user_id = data['user_id']
         user = storage.get(User, user_id)
