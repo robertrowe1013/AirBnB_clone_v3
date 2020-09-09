@@ -27,11 +27,13 @@ def all_reviews(place_id):
             abort(400, description="Not a JSON")
         if 'user' not in request.json:
             abort(400, description="Missing user_id")
+        user_id = data['user_id']
         user = storage.get(User, user_id)
         if user is None:
             abort(404)
         if 'text' not in request.json:
             abort(400, description="Missing text")
+        data['place_id'] = place_id
         review = Review(**data)
         review.save()
         return (jsonify(review.to_dict()), 201)
