@@ -22,16 +22,18 @@ def get_city_place(city_id):
             output.append(place.to_dict())
         return (jsonify(output))
     if request.method == "POST":
-        request.get_json()
+        data = request.get_json()
         if not request.is_json:
             abort(400, description="Not a JSON")
         if 'user_id' not in request.json:
             abort(400, description="Missing user_id")
+        user_id = data['user_id']
         user = storage.get(User, user_id)
         if user is None:
             abort(404)
         if 'name' not in request.json:
             abort(400, description="Missing name")
+        data['city_id'] = city_id
         place = Place(**data)
         place.save()
         return (jsonify(place.to_dict()), 201)
